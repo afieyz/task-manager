@@ -22,7 +22,7 @@ export default function CompleteButton({
       type="button"
       onClick={handleComplete}
       disabled={isPending}
-      className="rounded-lg bg-green-100 px-4 py-2 text-sm font-medium text-green-700 hover:bg-green-200 disabled:cursor-not-allowed disabled:opacity-50"
+      className="rounded-xl bg-green-100 px-4 py-2 text-sm font-semibold text-green-700 transition hover:bg-green-200 disabled:cursor-not-allowed disabled:opacity-50"
     >
       {isPending ? "Completing..." : "Mark Complete"}
     </button>

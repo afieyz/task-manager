@@ -33,16 +33,19 @@ export default function EditTaskForm({
     ? new Date(task.due_date).toISOString().split("T")[0]
     : "";
 
+  const inputStyle =
+    "w-full rounded-xl border border-purple-100 bg-white px-4 py-3 text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-violet-400 focus:ring-4 focus:ring-violet-100";
+
   return (
     <form
       action={formAction}
-      className="mt-8 rounded-lg bg-white p-6 shadow"
+      className="mt-8 rounded-3xl border border-white/80 bg-white/85 p-6 shadow-xl shadow-purple-200/30 backdrop-blur sm:p-8"
     >
       {/* Title */}
       <div>
         <label
           htmlFor="title"
-          className="mb-2 block text-sm font-medium text-gray-700"
+          className="mb-2 block text-sm font-semibold text-gray-700"
         >
           Task Title
         </label>
@@ -53,7 +56,7 @@ export default function EditTaskForm({
           type="text"
           defaultValue={task.title}
           aria-describedby="title-error"
-          className="w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-900 outline-none focus:border-blue-500"
+          className={inputStyle}
         />
 
         <div
@@ -76,7 +79,7 @@ export default function EditTaskForm({
       <div className="mt-5">
         <label
           htmlFor="description"
-          className="mb-2 block text-sm font-medium text-gray-700"
+          className="mb-2 block text-sm font-semibold text-gray-700"
         >
           Description
         </label>
@@ -87,7 +90,7 @@ export default function EditTaskForm({
           rows={4}
           defaultValue={task.description ?? ""}
           aria-describedby="description-error"
-          className="w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-900 outline-none focus:border-blue-500"
+          className={inputStyle}
         />
 
         <div
@@ -110,7 +113,7 @@ export default function EditTaskForm({
       <div className="mt-5">
         <label
           htmlFor="due_date"
-          className="mb-2 block text-sm font-medium text-gray-700"
+          className="mb-2 block text-sm font-semibold text-gray-700"
         >
           Due Date
         </label>
@@ -121,7 +124,7 @@ export default function EditTaskForm({
           type="date"
           defaultValue={dueDateValue}
           aria-describedby="due-date-error"
-          className="w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-900 outline-none focus:border-blue-500"
+          className={inputStyle}
         />
 
         <div
@@ -144,7 +147,7 @@ export default function EditTaskForm({
       <div className="mt-5">
         <label
           htmlFor="status"
-          className="mb-2 block text-sm font-medium text-gray-700"
+          className="mb-2 block text-sm font-semibold text-gray-700"
         >
           Status
         </label>
@@ -154,7 +157,7 @@ export default function EditTaskForm({
           name="status"
           defaultValue={task.status}
           aria-describedby="status-error"
-          className="w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-900"
+          className={inputStyle}
         >
           <option value="Pending">
             Pending
@@ -187,7 +190,7 @@ export default function EditTaskForm({
       <div className="mt-5">
         <label
           htmlFor="priority"
-          className="mb-2 block text-sm font-medium text-gray-700"
+          className="mb-2 block text-sm font-semibold text-gray-700"
         >
           Priority
         </label>
@@ -197,7 +200,7 @@ export default function EditTaskForm({
           name="priority"
           defaultValue={task.priority}
           aria-describedby="priority-error"
-          className="w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-900"
+          className={inputStyle}
         >
           <option value="Low">
             Low
@@ -231,17 +234,17 @@ export default function EditTaskForm({
         <div
           aria-live="polite"
           aria-atomic="true"
-          className="mt-5 rounded-lg bg-red-50 p-3 text-sm text-red-700"
+          className="mt-5 rounded-xl border border-red-100 bg-red-50 p-3 text-sm text-red-700"
         >
           {state.message}
         </div>
       )}
 
       {/* Buttons */}
-      <div className="mt-6 flex justify-end gap-3">
+      <div className="mt-8 flex justify-end gap-3 border-t border-purple-100 pt-6">
         <Link
           href="/tasks"
-          className="rounded-lg border border-gray-300 px-5 py-2 text-gray-700 hover:bg-gray-100"
+          className="rounded-xl border border-purple-200 bg-white px-5 py-2.5 font-medium text-gray-700 transition hover:bg-purple-50 hover:text-violet-700"
         >
           Cancel
         </Link>

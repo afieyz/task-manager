@@ -75,63 +75,65 @@ export default function TaskCard({
   }
 
   return (
-    <div className="rounded-lg bg-white p-6 shadow">
-      <h2 className="text-xl font-semibold text-gray-900">
-        {title}
-      </h2>
+    <div className="rounded-2xl border border-white/80 bg-white/85 p-6 shadow-sm shadow-purple-100/60 backdrop-blur transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-purple-200/40">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div className="min-w-0">
+          <h2 className="text-xl font-bold text-gray-900">
+            {title}
+          </h2>
 
-      <p className="mt-2 text-gray-600">
-        {description}
-      </p>
+          <p className="mt-2 leading-6 text-gray-600">
+            {description}
+          </p>
 
-      <p className={`mt-3 text-sm ${dueDateColor}`}>
-        {dueDateText}
-      </p>
+          <p className={`mt-3 text-sm ${dueDateColor}`}>
+            {dueDateText}
+          </p>
+        </div>
 
-      <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         {/* Status and Priority */}
-        <div className="flex flex-wrap gap-2">
+        <div className="flex shrink-0 flex-wrap gap-2">
           <span
-            className={`rounded-full px-3 py-1 text-sm ${statusColor}`}
+            className={`rounded-full px-3 py-1 text-xs font-semibold ${statusColor}`}
           >
             {status}
           </span>
 
           <span
-            className={`rounded-full px-3 py-1 text-sm ${priorityColor}`}
+            className={`rounded-full px-3 py-1 text-xs font-semibold ${priorityColor}`}
           >
             {priority} Priority
           </span>
         </div>
+      </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-wrap gap-2">
-          <Link
-            href={`/tasks/${id}`}
-            className="rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200"
-          >
-            View
-          </Link>
+      {/* Action Buttons */}
+      <div className="mt-5 flex flex-wrap items-center justify-end gap-2 border-t border-purple-100 pt-4">
+        <Link
+          href={`/tasks/${id}`}
+          className="rounded-xl border border-purple-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-purple-50 hover:text-violet-700"
+        >
+          View
+        </Link>
 
-          {status === "Completed" ? (
-            <ReopenButton
-              reopenAction={reopenTaskWithId}
-            />
-          ) : (
-            <CompleteButton
-              completeAction={completeTaskWithId}
-            />
-          )}
+        {status === "Completed" ? (
+          <ReopenButton
+            reopenAction={reopenTaskWithId}
+          />
+        ) : (
+          <CompleteButton
+            completeAction={completeTaskWithId}
+          />
+        )}
 
-          <Link
-            href={`/tasks/${id}/edit`}
-            className="rounded-lg bg-blue-100 px-4 py-2 text-sm font-medium text-blue-700 hover:bg-blue-200"
-          >
-            Edit
-          </Link>
+        <Link
+          href={`/tasks/${id}/edit`}
+          className="rounded-xl bg-violet-100 px-4 py-2 text-sm font-semibold text-violet-700 transition hover:bg-violet-200"
+        >
+          Edit
+        </Link>
 
-          <DeleteButton deleteAction={deleteTaskWithId} />
-        </div>
+        <DeleteButton deleteAction={deleteTaskWithId} />
       </div>
     </div>
   );

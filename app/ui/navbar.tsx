@@ -5,19 +5,32 @@ export default async function Navbar() {
   const session = await auth();
 
   return (
-    <nav className="border-b bg-white">
-      <div className="mx-auto flex max-w-4xl items-center justify-between px-8 py-4">
+    <nav className="sticky top-0 z-50 border-b border-purple-100 bg-white/80 backdrop-blur-xl">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        {/* Logo */}
         <Link
           href="/"
-          className="text-xl font-bold text-gray-900"
+          className="flex items-center gap-3"
         >
-          Task Manager
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-600 text-lg font-bold text-white shadow-md shadow-violet-200">
+            ✓
+          </div>
+
+          <div>
+            <p className="text-lg font-bold leading-none text-gray-900">
+              Task Manager
+            </p>
+            <p className="mt-1 text-xs text-gray-400">
+              Stay organized
+            </p>
+          </div>
         </Link>
 
-        <div className="flex items-center gap-6">
+        {/* Navigation */}
+        <div className="flex items-center gap-2 sm:gap-4">
           <Link
             href="/"
-            className="text-gray-600 hover:text-blue-600"
+            className="rounded-lg px-3 py-2 text-sm font-medium text-gray-600 transition hover:bg-purple-50 hover:text-violet-600"
           >
             Home
           </Link>
@@ -26,7 +39,7 @@ export default async function Navbar() {
             <>
               <Link
                 href="/tasks"
-                className="text-gray-600 hover:text-blue-600"
+                className="rounded-lg px-3 py-2 text-sm font-medium text-gray-600 transition hover:bg-purple-50 hover:text-violet-600"
               >
                 Tasks
               </Link>
@@ -34,6 +47,7 @@ export default async function Navbar() {
               <form
                 action={async () => {
                   "use server";
+
                   await signOut({
                     redirectTo: "/",
                   });
@@ -41,7 +55,7 @@ export default async function Navbar() {
               >
                 <button
                   type="submit"
-                  className="text-gray-600 hover:text-red-600"
+                  className="rounded-xl border border-purple-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-purple-300 hover:bg-purple-50 hover:text-violet-700"
                 >
                   Sign Out
                 </button>
@@ -50,7 +64,7 @@ export default async function Navbar() {
           ) : (
             <Link
               href="/login"
-              className="text-gray-600 hover:text-blue-600"
+              className="rounded-xl bg-violet-600 px-5 py-2 text-sm font-semibold text-white shadow-md shadow-violet-200 transition hover:bg-violet-700"
             >
               Sign In
             </Link>

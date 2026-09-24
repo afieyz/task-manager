@@ -36,7 +36,7 @@ export default async function EditTaskPage({
   }
 
   return (
-    <main className="min-h-screen bg-gray-100 p-8">
+    <main className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-indigo-100 p-8">
       <div className="mx-auto max-w-2xl">
         <h1 className="text-3xl font-bold text-gray-900">
           Edit Task
