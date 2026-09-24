@@ -1,20 +1,31 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import TaskCard from "@/app/ui/task-card";
 import Search from "@/app/ui/search";
 import StatusFilter from "@/app/ui/status-filter";
-import SortFilter from "@/app/ui/sort-filter";
-import { fetchTasks, fetchTaskSummary } from "@/app/lib/data";
 import PriorityFilter from "@/app/ui/priority-filter";
+import SortFilter from "@/app/ui/sort-filter";
+import Pagination from "@/app/ui/pagination";
+import {
+  fetchTasks,
+  fetchTaskSummary,
+  fetchTasksPages,
+} from "@/app/lib/data";
+
+export const metadata: Metadata = {
+  title: "Tasks",
+};
 
 export default async function TasksPage({
   searchParams,
 }: {
-      searchParams: Promise<{
-      query?: string;
-      status?: string;
-      priority?: string;
-      sort?: string;
-    }>;
+  searchParams: Promise<{
+    query?: string;
+    status?: string;
+    priority?: string;
+    sort?: string;
+    page?: string;
+  }>;
 }) {
   const params = await searchParams;
 
@@ -23,14 +34,28 @@ export default async function TasksPage({
   const priority = params.priority || "";
   const sort = params.sort || "newest";
 
-  const [tasks, summary] = await Promise.all([
-    fetchTasks(query, status, priority, sort),
+  const parsedPage = Number(params.page);
+  const currentPage =
+    Number.isInteger(parsedPage) && parsedPage > 0
+      ? parsedPage
+      : 1;
+
+  const [tasks, summary, totalPages] = await Promise.all([
+    fetchTasks(
+      query,
+      status,
+      priority,
+      sort,
+      currentPage
+    ),
     fetchTaskSummary(),
+    fetchTasksPages(query, status, priority),
   ]);
 
   return (
     <main className="min-h-screen bg-gray-100 p-8">
       <div className="mx-auto max-w-4xl">
+        {/* Page Header */}
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">
@@ -94,8 +119,8 @@ export default async function TasksPage({
         </div>
 
         {/* Search, Filter and Sort */}
-        <div className="mt-8 flex gap-3">
-          <div className="flex-1">
+        <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="sm:col-span-2 lg:col-span-1">
             <Search />
           </div>
 
@@ -111,13 +136,13 @@ export default async function TasksPage({
           {tasks.length === 0 ? (
             <div className="rounded-lg bg-white p-10 text-center shadow">
               <h2 className="text-xl font-semibold text-gray-900">
-                {query || status
+                {query || status || priority
                   ? "No matching tasks."
                   : "No tasks yet."}
               </h2>
 
               <p className="mt-2 text-gray-600">
-                {query || status
+                {query || status || priority
                   ? "Try changing your search or filter."
                   : "Create your first task to get started."}
               </p>
@@ -130,9 +155,10 @@ export default async function TasksPage({
               </Link>
             </div>
           ) : (
-            <div className="space-y-4">
-              {tasks.map((task) => (
-                <TaskCard
+            <>
+              <div className="space-y-4">
+                {tasks.map((task) => (
+                  <TaskCard
                     key={task.id}
                     id={task.id}
                     title={task.title}
@@ -140,9 +166,15 @@ export default async function TasksPage({
                     status={task.status}
                     priority={task.priority}
                     dueDate={task.due_date}
-                    />
-              ))}
-            </div>
+                  />
+                ))}
+              </div>
+
+              <Pagination
+                totalPages={totalPages}
+                currentPage={currentPage}
+              />
+            </>
           )}
         </div>
       </div>

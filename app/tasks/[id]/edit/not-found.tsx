@@ -9,7 +9,9 @@ export default function NotFound() {
         </h1>
 
         <p className="mt-3 text-gray-600">
-          The task you're looking for doesn't exist.
+          <p className="mt-3 text-gray-600">
+        The task you&apos;re looking for doesn&apos;t exist.
+        </p>
         </p>
 
         <Link

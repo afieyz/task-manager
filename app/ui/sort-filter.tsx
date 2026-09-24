@@ -14,6 +14,8 @@ export default function SortFilter() {
   function handleSort(sort: string) {
     const params = new URLSearchParams(searchParams);
 
+    params.set("page", "1");
+
     if (sort && sort !== "newest") {
       params.set("sort", sort);
     } else {

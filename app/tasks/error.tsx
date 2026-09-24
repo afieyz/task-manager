@@ -14,7 +14,7 @@ export default function Error({
         </h1>
 
         <p className="mt-3 text-gray-600">
-          We couldn't complete your request. Please try again.
+          We couldn&apos;t complete your request. Please try again.
         </p>
 
         <button

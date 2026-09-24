@@ -1,6 +1,12 @@
 import Link from "next/link";
-import { deleteTask } from "@/app/lib/actions";
+import {
+  deleteTask,
+  completeTask,
+  reopenTask,
+} from "@/app/lib/actions";
 import DeleteButton from "@/app/ui/delete-button";
+import CompleteButton from "@/app/ui/complete-button";
+import ReopenButton from "@/app/ui/reopen-button";
 
 type TaskCardProps = {
   id: number;
@@ -20,6 +26,8 @@ export default function TaskCard({
   dueDate,
 }: TaskCardProps) {
   const deleteTaskWithId = deleteTask.bind(null, id);
+  const completeTaskWithId = completeTask.bind(null, id);
+  const reopenTaskWithId = reopenTask.bind(null, id);
 
   const statusColor =
     status === "Completed"
@@ -40,7 +48,6 @@ export default function TaskCard({
 
   if (dueDate) {
     const due = new Date(dueDate);
-
     const today = new Date();
 
     due.setHours(0, 0, 0, 0);
@@ -81,8 +88,9 @@ export default function TaskCard({
         {dueDateText}
       </p>
 
-      <div className="mt-4 flex items-center justify-between">
-        <div className="flex gap-3">
+      <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        {/* Status and Priority */}
+        <div className="flex flex-wrap gap-2">
           <span
             className={`rounded-full px-3 py-1 text-sm ${statusColor}`}
           >
@@ -96,7 +104,25 @@ export default function TaskCard({
           </span>
         </div>
 
-        <div className="flex gap-2">
+        {/* Action Buttons */}
+        <div className="flex flex-wrap gap-2">
+          <Link
+            href={`/tasks/${id}`}
+            className="rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200"
+          >
+            View
+          </Link>
+
+          {status === "Completed" ? (
+            <ReopenButton
+              reopenAction={reopenTaskWithId}
+            />
+          ) : (
+            <CompleteButton
+              completeAction={completeTaskWithId}
+            />
+          )}
+
           <Link
             href={`/tasks/${id}/edit`}
             className="rounded-lg bg-blue-100 px-4 py-2 text-sm font-medium text-blue-700 hover:bg-blue-200"

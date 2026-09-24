@@ -14,6 +14,8 @@ export default function PriorityFilter() {
   function handleFilter(priority: string) {
     const params = new URLSearchParams(searchParams);
 
+    params.set("page", "1");
+
     if (priority) {
       params.set("priority", priority);
     } else {

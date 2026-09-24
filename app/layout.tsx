@@ -14,8 +14,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Task Manager",
-  description: "A simple task management application built with Next.js.",
+  title: {
+    template: "%s | Task Manager",
+    default: "Task Manager",
+  },
+  description:
+    "A simple task management application built with Next.js.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

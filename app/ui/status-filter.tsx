@@ -10,9 +10,11 @@ export default function StatusFilter() {
   function handleFilter(status: string) {
     const params = new URLSearchParams(searchParams);
 
+    params.set("page", "1");
+
     if (status) {
       params.set("status", status);
-    } else {
+    } else {params.set("page", "1");
       params.delete("status");
     }
 
